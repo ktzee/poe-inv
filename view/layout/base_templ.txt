@@ -1,2 +1,0 @@
-<!doctype html><html class=\"dark\" lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Hello, TEMPL</title><!-- tailwind css --><link href=\"/static/css/tailwind.css\" rel=\"stylesheet\"></head><body class=\"bg-white\"><!-- htmx -->
-<script src=\"/static/htmx.min.js\"></script></body></html>
