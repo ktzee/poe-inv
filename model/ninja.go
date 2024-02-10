@@ -9,7 +9,7 @@ import (
 	"github.com/lithammer/fuzzysearch/fuzzy"
 )
 
-type PriceData struct {
+type ItemPriceData struct {
 	Lines            []Item `json:"lines"`
 	itemsKeyedByName map[string]*Item
 }
@@ -45,9 +45,9 @@ type ExplicitModifiers struct {
 	Optional bool   `json:"optional"`
 }
 
-func FetchPriceData(url string, item_type string) PriceData {
+func FetchPriceData(url string, item_type string) ItemPriceData {
 	// "https://poe.ninja/api/data/itemoverview?league=Affliction&type="
-	var data PriceData
+	var data ItemPriceData
 	resp, err := http.Get(url + item_type)
 	if err != nil {
 		log.Fatalln(err)
@@ -62,7 +62,7 @@ func FetchPriceData(url string, item_type string) PriceData {
 	return data
 }
 
-func NewPriceData(url string, item_type string) *PriceData {
+func NewPriceData(url string, item_type string) *ItemPriceData {
 	// fetch data from poe.ninja
 	priceData := FetchPriceData(url, item_type)
 	// create map of items with names as keys
@@ -71,13 +71,13 @@ func NewPriceData(url string, item_type string) *PriceData {
 		itemsKeyedByName[item.Name] = &item
 	}
 	// return the poeninja data plus the map
-	return &PriceData{
+	return &ItemPriceData{
 		Lines:            priceData.Lines,
 		itemsKeyedByName: itemsKeyedByName,
 	}
 }
 
-func (pd PriceData) GetItemChaosPrice(item_name string) float64 {
+func (pd ItemPriceData) GetItemChaosPrice(item_name string) float64 {
 	for i := range pd.Lines {
 		if pd.Lines[i].Name == item_name {
 			return pd.Lines[i].ChaosValue
@@ -86,7 +86,7 @@ func (pd PriceData) GetItemChaosPrice(item_name string) float64 {
 	return -1
 }
 
-func (pd PriceData) GetItemDivinePrice(item_name string) float64 {
+func (pd ItemPriceData) GetItemDivinePrice(item_name string) float64 {
 	for i := range pd.Lines {
 		if pd.Lines[i].Name == item_name {
 			return pd.Lines[i].DivineValue
@@ -95,7 +95,7 @@ func (pd PriceData) GetItemDivinePrice(item_name string) float64 {
 	return -1
 }
 
-func (pd PriceData) GetItemList() []string {
+func (pd ItemPriceData) GetItemList() []string {
 	var names []string
 	for i := range pd.Lines {
 		names = append(names, pd.Lines[i].Name)
@@ -103,6 +103,6 @@ func (pd PriceData) GetItemList() []string {
 	return names
 }
 
-func (pd PriceData) SearchItems(term string) []string {
+func (pd ItemPriceData) SearchItems(term string) []string {
 	return fuzzy.FindFold(term, pd.GetItemList())
 }

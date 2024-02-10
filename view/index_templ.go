@@ -16,7 +16,7 @@ import (
 	"github.com/ktzee/poe-inv/model"
 )
 
-func Scarab(scarabData model.PriceData) templ.Component {
+func Index(scarabData model.PriceData) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -35,7 +35,7 @@ func Scarab(scarabData model.PriceData) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header></header><h1 class=\"center text-3xl font-bold\">Select Scarabs</h1><div class=\"\"><input class=\"form-control\" type=\"search\" name=\"search\" placeholder=\"Search Scarabs...\" hx-post=\"/search-scarab\" hx-trigger=\"input changed delay:500ms, search\" hx-target=\"#search-results\"><!-- HTMX here --><!-- TODO: implement this: https://htmx.org/examples/active-search/ using fuzzy search (services.SearchItems) --><table class=\"table\"><thead><tr><th>First Name</th><th>Last Name</th><th>Email</th></tr></thead> <tbody id=\"search-results\"></tbody></table></div>")
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -55,7 +55,7 @@ func Scarab(scarabData model.PriceData) templ.Component {
 	})
 }
 
-func ScarabSearchResults(results map[string]string) templ.Component {
+func ScarabSearchResults(results any) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {

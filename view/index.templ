@@ -6,7 +6,7 @@ import (
 	"github.com/ktzee/poe-inv/model"
 )
 
-templ Scarab(scarabData model.PriceData) {
+templ Index(scarabData model.PriceData) {
 	@layout.Base() {
 		<header></header>
 		<h1 class="center text-3xl font-bold">
@@ -38,5 +38,5 @@ templ Scarab(scarabData model.PriceData) {
 	}
 }
 
-templ ScarabSearchResults (results map[string]string) {
+templ ScarabSearchResults (results any) {
 }
